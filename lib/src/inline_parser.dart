@@ -25,9 +25,9 @@ class InlineParser {
     TextSyntax(r' \* ', startCharacter: $space),
     // "_" surrounded by spaces is left alone.
     TextSyntax(r' _ ', startCharacter: $space),
-    // Parse "**strong**" and "*emphasis*" tags.
+    // Parse "*strong*" and "**emphasis**" tags.
     TagSyntax(r'\*+', requiresDelimiterRun: true),
-    // Parse "__strong__" and "_emphasis_" tags.
+    // Parse "_strong_" and "__emphasis__" tags.
     TagSyntax(r'_+', requiresDelimiterRun: true),
     CodeSyntax(),
     // We will add the LinkSyntax once we know about the specific link resolver.
