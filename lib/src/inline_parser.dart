@@ -630,31 +630,31 @@ class TagSyntax extends InlineSyntax {
     var openingRunLength = state.endPos - state.startPos;
     var delimiterRun = _DelimiterRun.tryParse(parser, matchStart, matchEnd);
 
-    if (openingRunLength == 1 && runLength == 1) {
+    if (openingRunLength == 2 && runLength == 2) {
       parser.addNode(Element('em', state.children));
-    } else if (openingRunLength == 1 && runLength > 1) {
-      parser.addNode(Element('em', state.children));
-      parser.pos = parser.pos - (runLength - 1);
-      parser.start = parser.pos;
-    } else if (openingRunLength > 1 && runLength == 1) {
-      parser.openTag(
-          TagState(state.startPos, state.endPos - 1, this, delimiterRun));
-      parser.addNode(Element('em', state.children));
-    } else if (openingRunLength == 2 && runLength == 2) {
-      parser.addNode(Element('strong', state.children));
     } else if (openingRunLength == 2 && runLength > 2) {
-      parser.addNode(Element('strong', state.children));
+      parser.addNode(Element('em', state.children));
       parser.pos = parser.pos - (runLength - 2);
       parser.start = parser.pos;
     } else if (openingRunLength > 2 && runLength == 2) {
       parser.openTag(
           TagState(state.startPos, state.endPos - 2, this, delimiterRun));
+      parser.addNode(Element('em', state.children));
+    } else if (openingRunLength == 1 && runLength == 1) {
       parser.addNode(Element('strong', state.children));
-    } else if (openingRunLength > 2 && runLength > 2) {
+    } else if (openingRunLength == 1 && runLength > 1) {
+      parser.addNode(Element('strong', state.children));
+      parser.pos = parser.pos - (runLength - 1);
+      parser.start = parser.pos;
+    } else if (openingRunLength > 1 && runLength == 1) {
       parser.openTag(
-          TagState(state.startPos, state.endPos - 2, this, delimiterRun));
+          TagState(state.startPos, state.endPos - 1, this, delimiterRun));
       parser.addNode(Element('strong', state.children));
-      parser.pos = parser.pos - (runLength - 2);
+    } else if (openingRunLength > 1 && runLength > 1) {
+      parser.openTag(
+          TagState(state.startPos, state.endPos - 1, this, delimiterRun));
+      parser.addNode(Element('strong', state.children));
+      parser.pos = parser.pos - (runLength - 1);
       parser.start = parser.pos;
     }
 
